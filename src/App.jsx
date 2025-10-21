@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Menu, X, Play, Volume2, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
-import handcuffsImage from './assets/handcuffs_image_refined.png'
+import handcuffsImage from './assets/hero.png'
 import claLogo from './assets/cla_logo.png'
 import footerLogo from './assets/cla_logo.png'
-import freedPersonImage from './assets/freed_person.png'
+import freedPersonImage from './assets/jail.png'
 import claAppBanner from './assets/cla_app_banner_new.png'
 import usbDeviceBranded from './assets/usb_device_branded_final.png'
 import otgConnectionEnhanced from './assets/otg_connection_enhanced.png'
@@ -370,7 +370,7 @@ function App() {
       {/* Bail Bonds Section */}
       <section className="py-8 lg:py-12 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="space-y-6">
               <h2 className="text-3xl lg:text-4xl font-bold">Bail Bonds Services</h2>
               <p className="text-xl text-blue-100 leading-relaxed">
@@ -390,14 +390,14 @@ function App() {
             </div>
             
             <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6">Quick Bail Bond Request</h3>
+              <h3 className="text-2xl font-bold mb-6 text-black">Quick Bail Bond Request</h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold text-sm">1</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Submit request through the app</h4>
+                    <h4 className="font-semibold text-black">Submit request through the app</h4>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
@@ -405,7 +405,7 @@ function App() {
                     <span className="text-white font-bold text-sm">2</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Receive up to $500 coverage</h4>
+                    <h4 className="font-semibold text-black">Receive up to $500 coverage</h4>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
@@ -413,7 +413,7 @@ function App() {
                     <span className="text-white font-bold text-sm">3</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Get released and back home</h4>
+                    <h4 className="font-semibold text-black">Get released and back home</h4>
                   </div>
                 </div>
               </div>
@@ -423,6 +423,9 @@ function App() {
                   Learn More
                 </Button>
               </div>
+                <div className="mt-6">
+                  <img src={freedPersonImage} alt="Freed Person" className="w-full h-auto rounded-lg shadow-xl" />
+                </div>
             </div>
           </div>
         </div>
