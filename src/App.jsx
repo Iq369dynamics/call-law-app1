@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button.jsx'
-import { Menu, X, Play, Volume2, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
-import handcuffsImage from './assets/hero.png'
+import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
+import handcuffsImage from './assets/handcuffs_image_refined.png'
 import claLogo from './assets/cla_logo.png'
 import footerLogo from './assets/cla_logo.png'
-import freedPersonImage from './assets/jail.png'
+import freedPersonImage from './assets/freed_person.png'
 import claAppBanner from './assets/cla_app_banner_new.png'
 import usbDeviceBranded from './assets/usb_device_branded_final.png'
 import otgConnectionEnhanced from './assets/otg_connection_enhanced.png'
@@ -13,6 +13,52 @@ import './App.css'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [videoProgress, setVideoProgress] = useState(0)
+  const [isMuted, setIsMuted] = useState(false)
+  const videoRef = useRef(null)
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play()
+      }
+      setIsVideoPlaying(!isVideoPlaying)
+    }
+  }
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100
+      setVideoProgress(progress)
+    }
+  }
+
+  const handleVideoEnded = () => {
+    setIsVideoPlaying(false)
+    setVideoProgress(0)
+  }
+
+  const toggleFullscreen = () => {
+    if (videoRef.current) {
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen()
+      } else if (videoRef.current.webkitRequestFullscreen) {
+        videoRef.current.webkitRequestFullscreen()
+      } else if (videoRef.current.msRequestFullscreen) {
+        videoRef.current.msRequestFullscreen()
+      }
+    }
+  }
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+    }
+  }
 
   const coverageOptions = [
     {
@@ -272,9 +318,83 @@ function App() {
 
       {/* CLA App Banner Section */}
       <section className="py-8 lg:py-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">Experience the Call Law App Interface</h2>
-          <img src={claAppBanner} alt="Call Law App Interface Banner" className="w-full h-auto rounded-lg shadow-xl mx-auto" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">Experience the Call Law App Interface</h2>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Video Player */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-40 transition-opacity duration-300"></div>
+              <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl group-hover:shadow-3xl transition-shadow duration-300">
+                <div className="aspect-video bg-black relative">
+                  {/* Video element */}
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    poster={claAppBanner}
+                    muted={isMuted}
+                    onTimeUpdate={handleTimeUpdate}
+                    onEnded={handleVideoEnded}
+                    onClick={handlePlayPause}
+                  >
+                    <source src="/1000012240.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  {/* Play/Pause button overlay - shown when not playing */}
+                  {!isVideoPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center cursor-pointer" onClick={handlePlayPause}>
+                      <div className="flex flex-col items-center space-y-4">
+                        <div className="w-20 h-20 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl">
+                          <Play className="w-10 h-10 text-white ml-1" fill="white" />
+                        </div>
+                        <p className="text-white text-sm font-semibold drop-shadow-lg">Watch Demo</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Video controls bar */}
+                <div className="bg-gray-900 px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    {/* Play/Pause control */}
+                    <button onClick={handlePlayPause} className="text-white hover:text-blue-400 transition-colors">
+                      {isVideoPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                    </button>
+
+                    {/* Progress bar */}
+                    <div className="flex items-center space-x-2 flex-1">
+                      <div className="w-full bg-gray-700 rounded-full h-1">
+                        <div className="bg-blue-600 h-1 rounded-full transition-all" style={{width: `${videoProgress}%`}}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 ml-4">
+                    <button onClick={toggleMute} className="text-gray-400 hover:text-white transition-colors">
+                      {isMuted ? (
+                        <VolumeX className="w-4 h-4" />
+                      ) : (
+                        <Volume2 className="w-4 h-4" />
+                      )}
+                    </button>
+                    <Maximize className="w-4 h-4 text-gray-400 cursor-pointer hover:text-white transition-colors" onClick={toggleFullscreen} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-blue-400 rounded-full opacity-10 blur-2xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-600 rounded-full opacity-10 blur-2xl"></div>
+            </div>
+            
+            {/* App Banner Image */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+              <img src={claAppBanner} alt="Call Law App Interface Banner" className="relative w-full h-auto rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -370,7 +490,7 @@ function App() {
       {/* Bail Bonds Section */}
       <section className="py-8 lg:py-12 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl lg:text-4xl font-bold">Bail Bonds Services</h2>
               <p className="text-xl text-blue-100 leading-relaxed">
@@ -390,14 +510,14 @@ function App() {
             </div>
             
             <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-6 text-black">Quick Bail Bond Request</h3>
+              <h3 className="text-2xl font-bold mb-6">Quick Bail Bond Request</h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold text-sm">1</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black">Submit request through the app</h4>
+                    <h4 className="font-semibold">Submit request through the app</h4>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
@@ -405,7 +525,7 @@ function App() {
                     <span className="text-white font-bold text-sm">2</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black">Receive up to $500 coverage</h4>
+                    <h4 className="font-semibold">Receive up to $500 coverage</h4>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
@@ -413,7 +533,7 @@ function App() {
                     <span className="text-white font-bold text-sm">3</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-black">Get released and back home</h4>
+                    <h4 className="font-semibold">Get released and back home</h4>
                   </div>
                 </div>
               </div>
@@ -423,9 +543,6 @@ function App() {
                   Learn More
                 </Button>
               </div>
-                <div className="mt-6">
-                  <img src={freedPersonImage} alt="Freed Person" className="w-full h-auto rounded-lg shadow-xl" />
-                </div>
             </div>
           </div>
         </div>
