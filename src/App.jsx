@@ -339,7 +339,7 @@ function App() {
                     onEnded={handleVideoEnded}
                     onClick={handlePlayPause}
                   >
-                    <source src="/1000012240.mp4" type="video/mp4" />
+                    <source src="/1000012818.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
 
