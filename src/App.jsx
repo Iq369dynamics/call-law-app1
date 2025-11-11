@@ -2,8 +2,8 @@ import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
 import handcuffsImage from './assets/hero.png'
-import claLogo from './assets/cla_logo.png'
-import footerLogo from './assets/cla_logo.png'
+import claLogo from './assets/cla_logo_main.png'
+import footerLogo from './assets/cla_logo_main.png'
 import freedPersonImage from './assets/jail.png'
 import claAppBanner from './assets/cla_app_banner_new.png'
 import usbDeviceBranded from './assets/usb_device_branded_final.png'
@@ -207,15 +207,35 @@ function App() {
               
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold text-gray-800">Download CALL LAW APP Version 2.0</h2>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center space-x-2">
-                    <Download size={20} />
-                    <span>Android</span>
-                  </Button>
-                  <Button className="bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center space-x-2">
-                    <Download size={20} />
-                    <span>iOS</span>
-                  </Button>
+                <div className="grid grid-cols-2 gap-4 max-w-xl">
+                  <a href="#" className="transform hover:scale-105 transition-transform duration-200">
+                    <img
+                      src="/google-play-badge.png"
+                      alt="Get it on Google Play"
+                      className="w-full h-auto"
+                    />
+                  </a>
+                  <a href="#" className="transform hover:scale-105 transition-transform duration-200 ">
+                    <img
+                      src="/app-store-badge.png"
+                      alt="Download on the App Store"
+                      className="w-full h-auto"
+                    />
+                  </a>
+                  <a href="#" className="transform hover:scale-105 transition-transform duration-200">
+                    <img
+                      src="/amazon-appstore-badge.png"
+                      alt="Available at Amazon Appstore"
+                      className="w-full h-auto"
+                    />
+                  </a>
+                  <a href="#" className="transform hover:scale-105 transition-transform duration-200">
+                    <img
+                      src="/huawei-appgallery-badge.png"
+                      alt="Explore it on AppGallery"
+                      className="w-full h-auto"
+                    />
+                  </a>
                 </div>
               </div>
             </div>
@@ -703,9 +723,7 @@ function App() {
             {/* Company Info */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={footerLogo} alt="CLA Logo" className="w-10 h
-
--10" />
+                <img src={footerLogo} alt="CLA Logo" className="w-12 h-12" />
                 <div>
                   <div className="text-white font-bold text-lg">CALL LAW APP</div>
                   <div className="text-blue-400 text-sm">Legal Services at Your Fingertips</div>
