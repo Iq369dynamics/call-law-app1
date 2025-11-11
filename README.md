@@ -1,6 +1,6 @@
 # Call Law App Website
 
-A modern, responsive React-based website for Call Law App - providing accessible legal services, bail bond coverage, and attorney network access.
+A modern, responsive React-based website for Call Law App - providing accessible legal services, bail bond coverage, and attorney network access. 
 
 ## Project Overview
 
