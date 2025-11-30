@@ -90,7 +90,7 @@ function Home() {
     setNewsletterStatus(null)
 
     try {
-      const response = await fetch('http://localhost:3001/api/newsletter/subscribe', {
+      const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ function Home() {
       const productId = productMap[selectedProduct]
 
       // Redirect to Stripe Checkout
-      const response = await fetch('http://localhost:3001/api/create-checkout-session', {
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
