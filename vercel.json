@@ -10,11 +10,5 @@
       "source": "/((?!api).*)",
       "destination": "/index.html"
     }
-  ],
-  "env": {
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret",
-    "EMAIL_USER": "@email_user",
-    "EMAIL_PASSWORD": "@email_password"
-  }
+  ]
 }
