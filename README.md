@@ -2,7 +2,7 @@
 
 A modern, responsive React-based website for Call Law App - providing accessible legal services, bail bond coverage, and attorney network access. 
 
-## Project Overview
+## Project Overview  
 
 Call Law App (CLA) is a legal service platform designed to provide accessible legal resources to underserved individuals. This website showcases the platform's features, coverage options, and services.
 
