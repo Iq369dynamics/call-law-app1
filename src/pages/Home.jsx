@@ -35,12 +35,13 @@ function Home() {
     initStripe()
   }, [])
 
-  const productMap = {
-    'CLA 30-Day Travel Coverage': 'prod_TO2cquLzPGGEQp',
-    'Single Coverage': 'price_1SRGZyCoHvYT5CHGjpUnPJxJ',
-    'Family Coverage': 'prod_TO2jV4KcmTcXuU',
-    'Group Coverage': 'prod_TO2nFMOrAKHY1j'
-  }
+const priceMap = {
+  'CLA 30-Day Travel Coverage': 'price_xxxxxx1',
+  'Single Coverage': 'price_1SRGZyCoHvYT5CHGjpUnPJxJ',
+  'Family Coverage': 'price_xxxxxx2',
+  'Group Coverage': 'price_xxxxxx3'
+}
+
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -119,36 +120,37 @@ function Home() {
     setShowPaymentModal(true)
   }
 
-  const handleCheckout = async () => {
-    if (!stripe || !selectedProduct) return
+const handleCheckout = async () => {
+  if (!stripe || !selectedProduct) return;
 
-    try {
-      const productId = productMap[selectedProduct]
+  try {
+    const priceId = priceMap[selectedProduct]; // GET PRICE ID
 
-      // Redirect to Stripe Checkout
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: productId,
-          email: newsletterEmail || 'customer@example.com',
-        }),
-      })
-
-      const session = await response.json()
-
-      if (session.id) {
-        const result = await stripe.redirectToCheckout({ sessionId: session.id })
-        if (result.error) {
-          console.error('Stripe error:', result.error.message)
-        }
-      }
-    } catch (error) {
-      console.error('Checkout error:', error)
+    if (!priceId) {
+      console.error("Invalid price ID for selected product");
+      return;
     }
+
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        priceId, 
+        email: newsletterEmail || 'customer@example.com',
+      }),
+    });
+
+    const session = await response.json();
+
+    if (session.id) {
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+      if (result.error) console.error(result.error.message);
+    }
+  } catch (error) {
+    console.error('Checkout error:', error);
   }
+};
+
 
   const coverageOptions = [
     {
