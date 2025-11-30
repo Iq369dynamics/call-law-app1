@@ -1,7 +1,6 @@
 {
   "buildCommand": "vite build",
   "outputDirectory": "dist",
-  "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [
     {
       "source": "/api/:path*",
