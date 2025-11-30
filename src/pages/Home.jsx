@@ -37,7 +37,7 @@ function Home() {
 
   const productMap = {
     'CLA 30-Day Travel Coverage': 'prod_TO2cquLzPGGEQp',
-    'Single Coverage': 'prod_TO2focZOjOeXXB',
+    'Single Coverage': 'price_1SRGZyCoHvYT5CHGjpUnPJxJ',
     'Family Coverage': 'prod_TO2jV4KcmTcXuU',
     'Group Coverage': 'prod_TO2nFMOrAKHY1j'
   }
