@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { loadStripe } from '@stripe/stripe-js'
 import { Button } from '@/components/ui/button.jsx'
 import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
 import handcuffsImage from '../assets/hero.png'
@@ -21,26 +20,15 @@ function Home() {
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [newsletterStatus, setNewsletterStatus] = useState(null)
   const [newsletterLoading, setNewsletterLoading] = useState(false)
-  const [stripe, setStripe] = useState(null)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
   const videoRef = useRef(null)
 
-  // Initialize Stripe
-  useEffect(() => {
-    const initStripe = async () => {
-      const stripeInstance = await loadStripe('pk_live_51JIZwPCoHvYT5CHGb6bkcJJvCNFMJM16EaBREU29jhprDtDUchzmheEVJ3532IKpLggV4tDzmtR7wIFSeXqlZeAC00vkkJDIds')
-      setStripe(stripeInstance)
-    }
-    initStripe()
-  }, [])
-
-const priceMap = {
-  'CLA 30-Day Travel Coverage': 'price_xxxxxx1',
-  'Single Coverage': 'price_1SRGZyCoHvYT5CHGjpUnPJxJ',
-  'Family Coverage': 'price_xxxxxx2',
-  'Group Coverage': 'price_xxxxxx3'
-}
+  // Payment links for each coverage option
+  const paymentLinks = {
+    'CLA 30-Day Travel Coverage': 'https://buy.stripe.com/7sYdR80UU7sY8H92xA3sI03',
+    'Single Coverage': 'https://buy.stripe.com/9B614mdHGeVqcXpfkm3sI02',
+    'Family Coverage': 'https://buy.stripe.com/5kQeVc476aFa8H9c8a3sI01',
+    'Group Coverage': 'https://buy.stripe.com/28EfZgbzy5kQf5xb463sI00'
+  }
 
 
   const handlePlayPause = () => {
@@ -115,41 +103,6 @@ const priceMap = {
     }
   }
 
-  const handleGetStarted = (productTitle) => {
-    setSelectedProduct(productTitle)
-    setShowPaymentModal(true)
-  }
-
-const handleCheckout = async () => {
-  if (!stripe || !selectedProduct) return;
-
-  try {
-    const priceId = priceMap[selectedProduct]; // GET PRICE ID
-
-    if (!priceId) {
-      console.error("Invalid price ID for selected product");
-      return;
-    }
-
-    const response = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        priceId, 
-        email: newsletterEmail || 'customer@example.com',
-      }),
-    });
-
-    const session = await response.json();
-
-    if (session.id) {
-      const result = await stripe.redirectToCheckout({ sessionId: session.id });
-      if (result.error) console.error(result.error.message);
-    }
-  } catch (error) {
-    console.error('Checkout error:', error);
-  }
-};
 
 
   const coverageOptions = [
@@ -569,12 +522,18 @@ const handleCheckout = async () => {
                       </li>
                     ))}
                   </ul>
-                  <Button
-                    onClick={() => handleGetStarted(option.title)}
-                    className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${option.popular ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}`}
+                  <a
+                    href={paymentLinks[option.title]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-center"
                   >
-                    Get Started
-                  </Button>
+                    <Button
+                      className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 ${option.popular ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'}`}
+                    >
+                      Get Started
+                    </Button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -896,46 +855,6 @@ const handleCheckout = async () => {
         </div>
       </footer>
 
-      {/* Payment Modal */}
-      {showPaymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900">Complete Your Purchase</h2>
-              <p className="text-gray-600 mt-2">{selectedProduct}</p>
-            </div>
-
-            <div className="p-6 space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600 mb-2">Newsletter Subscription</p>
-                <input
-                  type="email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="Enter your email (optional)"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <p className="text-xs text-gray-500 mt-2">Subscribe to our newsletter for exclusive updates and offers</p>
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <Button
-                  onClick={() => setShowPaymentModal(false)}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-semibold transition-all duration-200"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleCheckout}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
-                >
-                  Proceed to Payment
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
