@@ -6,7 +6,7 @@ import handcuffsImage from '../assets/hero.png'
 import claLogo from '../assets/cla_logo_main.png'
 import footerLogo from '../assets/cla_logo_main.png'
 import freedPersonImage from '../assets/jail.png'
-import claAppBanner from '../assets/cla_app_banner_new.png'
+import claAppBanner from '../assets/cla_app_banner_new.jpg'
 import usbDeviceBranded from '../assets/usb_device_branded_final.png'
 import otgConnectionEnhanced from '../assets/otg_connection_enhanced.png'
 import lisaAiBot from '../assets/lisa_ai_bot.webp'
@@ -408,7 +408,7 @@ function Home() {
                     onEnded={handleVideoEnded}
                     onClick={handlePlayPause}
                   >
-                    <source src="/1000012818.mp4" type="video/mp4" />
+                    <source src="/1000013497.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
 
@@ -461,7 +461,7 @@ function Home() {
             {/* App Banner Image */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
-              <img src={claAppBanner} alt="Call Law App Interface Banner" className="relative w-full h-auto rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300" />
+              <img src={claAppBanner} alt="Call Law App Interface Banner" className="relative w-full h-[325px] rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300" />
             </div>
           </div>
         </div>
