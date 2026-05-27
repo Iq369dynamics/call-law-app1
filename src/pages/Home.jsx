@@ -1,19 +1,23 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
-import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Twitter, Instagram, Linkedin, DollarSign } from 'lucide-react'
+import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Youtube, Instagram, Linkedin, DollarSign } from 'lucide-react'
+import { XLogo, Pinterest, TikTok } from '@/components/SocialIcons.jsx'
 import handcuffsImage from '../assets/hero.png'
 import claLogo from '../assets/cla_logo_main.png'
 import footerLogo from '../assets/cla_logo_main.png'
 import freedPersonImage from '../assets/jail.png'
 import claAppBanner from '../assets/cla_app_banner_new.jpg'
+import claAppBannerInterface from '../assets/cla_app_banner_new1.jpeg'
 import usbDeviceBranded from '../assets/usb_device_branded_final.png'
 import otgConnectionEnhanced from '../assets/otg_connection_enhanced.png'
 import lisaAiBot from '../assets/lisa_ai_bot.webp'
 import '../App.css'
+import SignupModal from '@/components/SignupModal/SignupModal.jsx'
 
 function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [signupOpen, setSignupOpen] = useState(false)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [videoProgress, setVideoProgress] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
@@ -209,7 +213,14 @@ function Home() {
               <a href="#coverage" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Coverage Options</a>
               <a href="#attorney" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Attorney Network</a>
               <a href="#blog" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Blog</a>
-              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+              <Button
+                type="button"
+                onClick={() => setSignupOpen(true)}
+                className="cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                Sign Up
+              </Button>
+              <Button className="cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
                 Free Coverage Survey
               </Button>
             </nav>
@@ -231,7 +242,17 @@ function Home() {
                 <a href="#coverage" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Coverage Options</a>
                 <a href="#attorney" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Attorney Network</a>
                 <a href="#blog" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Blog</a>
-                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg w-fit">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setSignupOpen(true)
+                    setMobileMenuOpen(false)
+                  }}
+                  className="cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg w-fit"
+                >
+                  Sign Up
+                </Button>
+                <Button className="cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg w-fit">
                   Free Coverage Survey
                 </Button>
               </nav>
@@ -485,7 +506,7 @@ function Home() {
             {/* App Banner Image */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
-              <img src={claAppBanner} alt="Call Law App Interface Banner" className="relative w-full h-[325px] rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300" />
+              <img src={claAppBannerInterface} alt="Call Law App Interface Banner" className="relative w-full h-[325px] rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300" />
             </div>
           </div>
         </div>
@@ -900,18 +921,27 @@ function Home() {
               
               <div className="mt-6">
                 <h5 className="font-semibold mb-3">Follow Us</h5>
-                <div className="flex space-x-4">
-                  <a href="https://facebook.com/888CLALAW1" className="text-gray-400 hover:text-white transition-colors">
+                <div className="flex flex-wrap gap-4">
+                  <a href="https://facebook.com/888CLALAW1" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
                     <Facebook size={24} />
                   </a>
-                  <a href="https://twitter.com/calllawapp" className="text-gray-400 hover:text-white transition-colors">
-                    <Twitter size={24} />
+                  <a href="https://x.com/calllawapp" className="text-gray-400 hover:text-white transition-colors" aria-label="X">
+                    <XLogo size={24} />
                   </a>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
                     <Instagram size={24} />
                   </a>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a href="https://www.linkedin.com/in/call-law-app-llc-8127a9411" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
                     <Linkedin size={24} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="YouTube">
+                    <Youtube size={24} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Pinterest">
+                    <Pinterest size={24} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="TikTok">
+                    <TikTok size={24} />
                   </a>
                 </div>
               </div>
@@ -924,6 +954,7 @@ function Home() {
         </div>
       </footer>
 
+      <SignupModal open={signupOpen} onClose={() => setSignupOpen(false)} />
     </div>
   )
 }
