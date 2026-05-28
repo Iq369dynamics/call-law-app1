@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import emailjs from '@emailjs/browser'
 import './SignupModal.css'
 
 const US_STATES = [
@@ -35,10 +36,16 @@ const LAUNCH_DATE = new Date('2026-07-04T00:00:00')
 const EXIT_ANIMATION_MS = 350
 
 function SignupModal({ open, onClose }) {
+  const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+  const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+  const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
   const [shouldRender, setShouldRender] = useState(open)
   const [isClosing, setIsClosing] = useState(false)
   const [step, setStep] = useState(1)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [barFill, setBarFill] = useState(0)
   const [countdown, setCountdown] = useState({ d: '--', h: '--', m: '--', s: '--' })
 
@@ -58,6 +65,8 @@ function SignupModal({ open, onClose }) {
   const resetForm = useCallback(() => {
     setStep(1)
     setShowSuccess(false)
+    setIsSubmitting(false)
+    setSubmitError('')
     setBarFill(0)
     setName('')
     setEmail('')
@@ -165,14 +174,42 @@ function SignupModal({ open, onClose }) {
     setErrors((prev) => ({ ...prev, service: '' }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (isSubmitting) return
+
     if (!selectedService) {
       setErrors((prev) => ({ ...prev, service: 'Please select a service to continue' }))
       return
     }
 
-    /* Integration point — send to CRM / backend when ready */
-    setShowSuccess(true)
+    if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
+      setSubmitError('Signup is temporarily unavailable. Please try again shortly.')
+      return
+    }
+
+    setSubmitError('')
+    setIsSubmitting(true)
+
+    try {
+      await emailjs.send(
+        emailJsServiceId,
+        emailJsTemplateId,
+        {
+          full_name: name.trim(),
+          email: email.trim(),
+          state: state.trim(),
+          phone: phone.trim() || 'N/A',
+          service: SERVICE_LABELS[selectedService] || selectedService,
+        },
+        { publicKey: emailJsPublicKey }
+      )
+
+      setShowSuccess(true)
+    } catch {
+      setSubmitError('Could not submit your signup right now. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const firstName = name.trim().split(' ')[0]
@@ -394,9 +431,14 @@ function SignupModal({ open, onClose }) {
                   ))}
                 </div>
 
-                <button type="button" className="cla-btn" onClick={handleSubmit}>
-                  🎇 Secure My Free Spot
+                <button type="button" className="cla-btn" onClick={handleSubmit} disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting...' : '🎇 Secure My Free Spot'}
                 </button>
+                {submitError && (
+                  <span className="cla-err" style={{ display: 'block', marginTop: 8 }}>
+                    {submitError}
+                  </span>
+                )}
                 <button type="button" className="cla-back" onClick={handleBack}>
                   ← Back to details
                 </button>
