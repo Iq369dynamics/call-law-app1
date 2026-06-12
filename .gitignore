@@ -27,6 +27,4 @@ dist-ssr
 config.bat
 
 # Environment variables
-.env
-.env.local
 .env.*.local
