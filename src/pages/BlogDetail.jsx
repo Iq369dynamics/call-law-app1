@@ -7,6 +7,54 @@ function BlogDetail() {
   const { id } = useParams()
 
   const blogPosts = {
+    'cla-social-post': {
+      htmlSrc: "/blogs/cla-social-post.html",
+      title: "Employment Rights: Millions of Workers Lose Rights They're Entitled To Every Year",
+      date: "June 2026",
+      readTime: "3 min read",
+      category: "Employment Law",
+      excerpt: "Millions of workers lose rights they're entitled to every year — not because they don't have them, but because they don't know them. CLA gives you 24/7 attorney access the moment you need it.",
+    },
+    'pain-stops-here': {
+      htmlSrc: "/blogs/cla-product-bio-pain.html",
+      title: "Call Law App — The Pain Stops Here",
+      date: "June 2026",
+      readTime: "5 min read",
+      category: "Legal Protection",
+      excerpt: "The justice system wasn't built for you. These are the 6 most painful moments in any legal crisis — and how Call Law App solves every single one, right now, in your pocket.",
+    },
+    'quinton-manning-founder': {
+      htmlSrc: "/blogs/quinton-manning-bio.html",
+      title: "Quinton Manning — Founder & CEO, Call Law App",
+      date: "June 2026",
+      readTime: "4 min read",
+      category: "Founder Profile",
+      excerpt: "Quinton Manning built what the $2.4 billion legal AI investment wave ignored: a platform designed for the people who need legal help most. A lifeline for real people in real emergencies.",
+    },
+    'legal-ai-betrayal': {
+      htmlSrc: "/blogs/legal-ai-blog.html",
+      title: "The $2.4 Billion Betrayal of Everyday Americans",
+      date: "May 2026",
+      readTime: "10 min read",
+      category: "Legal Technology",
+      excerpt: "Investors are flooding billions into legal AI — every dollar going to enrich big law firms that already charge $1,000 an hour. One app is fighting back.",
+    },
+    'employment-rights-workers': {
+      htmlSrc: "/blogs/cla-blog-employment-rights.html",
+      title: "Your Employer Is Not Your Friend: Employment Rights Every Worker Needs to Know",
+      date: "June 2026",
+      readTime: "8 min read",
+      category: "Employment Law",
+      excerpt: "The American workplace is governed by dense laws that protect workers on paper — but most workers never take action because they don't know their rights or can't afford to find out.",
+    },
+    'indiana-immigration-enforcement': {
+      htmlSrc: "/blogs/call-law-app-blog.html",
+      title: "Why Call Law App Matters — Indiana Has Expanded Local Immigration Enforcement",
+      date: "June 2026",
+      readTime: "7 min read",
+      category: "Immigration",
+      excerpt: "Indiana's new immigration enforcement law raises the stakes for everyday people. Call Law App helps users prepare, document encounters, and connect to legal help fast.",
+    },
     'bail-bonds-services': {
       title: "CALL LAW APP Bail Bonds services",
       date: "Oct 10, 2021",
@@ -690,6 +738,38 @@ function BlogDetail() {
   }
 
   const blog = blogPosts[id] || blogPosts['bail-bonds-services']
+
+  if (blog.htmlSrc) {
+    return (
+      <div className="flex flex-col h-screen">
+        {/* Header */}
+        <header className="bg-white shadow-lg z-50 border-b border-blue-100 shrink-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <Link to="/" className="flex items-center space-x-3">
+                <img src={claLogo} alt="CLA Logo" className="w-12 h-12" />
+                <div>
+                  <div className="text-gray-800 font-bold text-xl">CALL LAW APP</div>
+                  <div className="text-blue-600 text-sm font-medium">Legal Services at Your Fingertips</div>
+                </div>
+              </Link>
+              <Link to="/">
+                <Button className="bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center space-x-2">
+                  <ArrowLeft size={16} />
+                  <span>Back to Home</span>
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </header>
+        <iframe
+          src={blog.htmlSrc}
+          title={blog.title}
+          className="flex-1 w-full border-none"
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white">

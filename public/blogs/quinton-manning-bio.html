@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quinton Manning — Founder & CEO, Call Law App</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0A1628;
+    --royal: #1B4FD8;
+    --sky: #5B9BF8;
+    --mist: #C8DCFF;
+    --cream: #F7F4EE;
+    --gold: #C8A96E;
+    --text: #1A1A2E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 90% 50%, rgba(27,79,216,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(91,155,248,0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Decorative vertical rule */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 48px;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--royal) 30%, var(--sky) 70%, transparent);
+    opacity: 0.5;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: #fff;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.35s;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--mist);
+  }
+
+  .hero-title {
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 36px 0;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mist);
+    max-width: 560px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  /* Floating CLA logo mark top-right */
+  .logo-mark {
+    position: absolute;
+    top: 50px;
+    right: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.2s;
+  }
+
+  .logo-diamond-grid {
+    display: grid;
+    grid-template-columns: repeat(5,12px);
+    grid-template-rows: repeat(5,12px);
+    gap: 2px;
+    transform: rotate(45deg);
+  }
+
+  .logo-diamond-grid span {
+    display: block;
+    background: var(--royal);
+    opacity: 0.7;
+    border-radius: 1px;
+  }
+
+  .logo-diamond-grid span.bright { background: var(--sky); opacity: 1; }
+  .logo-diamond-grid span.hide { opacity: 0; }
+
+  .logo-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--sky);
+    margin-top: 8px;
+  }
+
+  /* ── BODY SECTION ── */
+  .body-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--royal);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--royal), transparent);
+    max-width: 80px;
+  }
+
+  .bio-lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--navy);
+    margin-bottom: 40px;
+  }
+
+  .bio-lead strong {
+    color: var(--royal);
+    font-weight: 600;
+  }
+
+  .bio-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: #2E2E40;
+    margin-bottom: 28px;
+  }
+
+  .bio-body + .bio-body { margin-top: 0; }
+
+  /* ── PULL QUOTES ── */
+  .quotes-section {
+    background: var(--navy);
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quotes-section::before {
+    content: '\201C';
+    position: absolute;
+    top: -40px;
+    left: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 300px;
+    color: var(--royal);
+    opacity: 0.08;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quotes-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .quotes-heading {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 52px;
+  }
+
+  .quote-item {
+    border-left: 2px solid var(--royal);
+    padding: 8px 0 8px 32px;
+    margin-bottom: 44px;
+  }
+
+  .quote-item:last-child { margin-bottom: 0; }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 2.8vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .quote-attr {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── MISSION GRID ── */
+  .mission-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 100px 40px 60px;
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+    background: #D6DDE8;
+  }
+
+  .mission-card {
+    background: #fff;
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .mission-card::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--royal);
+    margin-bottom: 20px;
+  }
+
+  .mission-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .mission-card-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #4A4A60;
+  }
+
+  /* ── CLOSING ── */
+  .closing-section {
+    background: var(--royal);
+    padding: 80px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-section::after {
+    content: 'CLA';
+    position: absolute;
+    bottom: -60px;
+    right: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .closing-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .closing-sub {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 40px;
+  }
+
+  .closing-mission {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.5;
+  }
+
+  .cta-link {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .cta-link:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { padding: 60px 28px 60px; }
+    .hero::after { left: 18px; }
+    .logo-mark { display: none; }
+    .body-wrap, .mission-section { padding-left: 24px; padding-right: 24px; }
+    .quotes-section { padding: 60px 24px; }
+    .mission-grid { grid-template-columns: 1fr; }
+    .closing-section { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+
+  <div class="logo-mark">
+    <div class="logo-diamond-grid">
+      <span class="hide"></span><span class="hide"></span><span class="bright"></span><span class="hide"></span><span class="hide"></span>
+      <span class="hide"></span><span></span><span class="bright"></span><span></span><span class="hide"></span>
+      <span></span><span class="bright"></span><span></span><span class="bright"></span><span></span>
+      <span class="hide"></span><span></span><span class="bright"></span><span></span><span class="hide"></span>
+      <span class="hide"></span><span class="hide"></span><span></span><span class="hide"></span><span class="hide"></span>
+    </div>
+    <span class="logo-text">CLA</span>
+  </div>
+
+  <p class="hero-eyebrow">Founder Profile · Call Law App LLC</p>
+  <h1 class="hero-name">Quinton<br><em>Manning</em></h1>
+  <p class="hero-title">Founder &amp; Chief Executive Officer</p>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">Building the legal lifeline that everyday Americans were never supposed to have.</p>
+</section>
+
+<!-- ═══════════ BIO BODY ═══════════ -->
+<section class="body-wrap">
+
+  <p class="section-label">The Founder</p>
+
+  <p class="bio-lead">
+    Quinton Manning didn't set out to disrupt an industry. He set out to solve a problem — the kind of problem that millions of ordinary Americans face every day, and that <strong>nobody with real resources had ever bothered to fix.</strong>
+  </p>
+
+  <p class="bio-body">
+    As the Founder and CEO of Call Law App LLC, Quinton Manning has built something that the $2.4 billion legal AI investment wave conspicuously ignored: a platform designed, from the ground up, for the people who need legal help most — and can least afford to be without it. 24/7 attorney access, bail bond coverage, and a full suite of legal resources, all in the palm of your hand. Not a tool for Am Law 100 partners. A lifeline for real people in real emergencies.
+  </p>
+
+  <p class="bio-body">
+    What distinguishes Manning is the rare combination of visionary ambition and practical discipline. He is a product builder in the truest sense — someone who believes that the gap between a great idea and a product people actually use is closed only through obsessive attention to real-world needs, relentless iteration, and an unflinching commitment to over-delivery. His guiding philosophy is simple and uncompromising: build something that exceeds what your users expect, then find ways to make it better still.
+  </p>
+
+  <p class="bio-body">
+    That philosophy was tested at every stage of Call Law App's development. Manning convened a research and design process that few founders would have the patience — or the humility — to attempt. He worked alongside a highly skilled team of legal professionals, law enforcement veterans, formerly incarcerated individuals, legal services organizations, technology and development specialists, ACLU representatives, independent law firms, bail bond agents, and ordinary citizens carrying real, pending legal issues. He commissioned deep research into legal trends, historical patterns of societal inequality in the justice system, and a forward-looking analysis of the legal resources and services that people actually need — not the ones that look good in a pitch deck.
+  </p>
+
+  <p class="bio-body">
+    The result is a product shaped by the voices of those it was built to serve. Every feature, every workflow, every piece of access it unlocks reflects a community — not a focus group. That is not a process that produces a generic app. It produces something people trust with the most consequential moments of their lives.
+  </p>
+
+  <p class="bio-body">
+    Manning's approach to building is an act of love for community — driven by a conviction that meaningful products are not just commercially successful, but genuinely transformative for the people who use them. He asks the questions that Silicon Valley has stopped asking: What does justice look like for the single father facing wrongful termination? For the renter threatened with illegal eviction? For the family navigating the legal system alone, without a $500-an-hour attorney in their corner? Manning doesn't just ask these questions — he builds the answers.
+  </p>
+
+  <p class="bio-body">
+    Blazing a trail through an industry resistant to change, Quinton Manning represents a new archetype of founder: one who leads with purpose before profit, who listens before building, and who measures success not in valuation milestones but in the number of lives made more secure, more protected, and more empowered by the work.
+  </p>
+
+</section>
+
+<!-- ═══════════ QUOTES ═══════════ -->
+<section class="quotes-section">
+  <div class="quotes-inner">
+    <p class="quotes-heading">In His Own Words</p>
+
+    <div class="quote-item">
+      <p class="quote-text">"Build products that exceed consumer expectations — and then find ways to make them even better."</p>
+      <p class="quote-attr">Quinton Manning · Founder &amp; CEO, Call Law App</p>
+    </div>
+
+    <div class="quote-item">
+      <p class="quote-text">"It's okay to over-deliver to your customer base. That's not a cost. That's the whole point."</p>
+      <p class="quote-attr">Quinton Manning · Founder &amp; CEO, Call Law App</p>
+    </div>
+
+    <div class="quote-item">
+      <p class="quote-text">"Be the first to ask questions. The answers are always there — most builders just never get around to asking."</p>
+      <p class="quote-attr">Quinton Manning · Founder &amp; CEO, Call Law App</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MISSION CARDS ═══════════ -->
+<section class="mission-section">
+  <p class="section-label">Built on Principle</p>
+
+  <div class="mission-grid">
+    <div class="mission-card">
+      <p class="mission-card-title">Community First</p>
+      <p class="mission-card-text">Every decision at Call Law App runs through a single filter: does this serve the people who need it most? Manning's process began not in a boardroom, but with the communities — formerly incarcerated individuals, renters, workers — who live the access-to-justice crisis every day.</p>
+    </div>
+    <div class="mission-card">
+      <p class="mission-card-title">Radical Collaboration</p>
+      <p class="mission-card-text">From ACLU advisors to bail bond agents, legal aid groups to law enforcement professionals, Manning built Call Law App with an unusually wide circle of expertise — ensuring that the product reflects the full complexity of the legal situations real people face.</p>
+    </div>
+    <div class="mission-card">
+      <p class="mission-card-title">Practical Vision</p>
+      <p class="mission-card-text">Manning pairs bold, forward-thinking ideas with a disciplined, ground-level approach to product design. Deep research into legal history and trends informs every feature — ensuring resources are not just available, but genuinely useful in moments of crisis.</p>
+    </div>
+    <div class="mission-card">
+      <p class="mission-card-title">A Mission, Not a Feature</p>
+      <p class="mission-card-text">Call Law App's mission — legal protection for every American, not just those who can afford it — is not a marketing line. It is the architecture of every product decision Quinton Manning makes. Justice, in his hands, is a design constraint.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSING ═══════════ -->
+<section class="closing-section">
+  <h2 class="closing-name">Quinton Manning</h2>
+  <p class="closing-sub">Founder &amp; CEO · Call Law App LLC</p>
+  <p class="closing-mission">"When you are at your most vulnerable — when the legal system feels like it is stacked against you — you should not be alone. And you should not be powerless."</p>
+  <a href="https://www.calllawapp.com" class="cta-link" target="_blank">Explore Call Law App →</a>
+</section>
+
+</body>
+</html>

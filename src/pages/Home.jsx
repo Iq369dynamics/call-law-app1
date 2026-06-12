@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Menu, X, Play, Pause, Volume2, VolumeX, Maximize, MoreVertical, Phone, Mail, MapPin, Shield, Users, Clock, Star, CheckCircle, ArrowRight, Download, Scale, Gavel, FileText, Facebook, Youtube, Instagram, Linkedin, DollarSign } from 'lucide-react'
@@ -25,6 +25,12 @@ function Home() {
   const [newsletterStatus, setNewsletterStatus] = useState(null)
   const [newsletterLoading, setNewsletterLoading] = useState(false)
   const videoRef = useRef(null)
+
+  useEffect(() => {
+    if (localStorage.getItem('claSignupSeen')) return
+    const t = setTimeout(() => setSignupOpen(true), 2500)
+    return () => clearTimeout(t)
+  }, [])
 
   // Payment links for each coverage option
   const paymentLinks = {
@@ -166,6 +172,42 @@ function Home() {
   ]
 
   const blogPosts = [
+    {
+      slug: "cla-social-post",
+      title: "Employment Rights: Millions of Workers Lose Rights They're Entitled To Every Year",
+      date: "June 2026",
+      excerpt: "Millions of workers lose rights they're entitled to every year — not because they don't have them, but because they don't know them."
+    },
+    {
+      slug: "pain-stops-here",
+      title: "Call Law App — The Pain Stops Here",
+      date: "June 2026",
+      excerpt: "The justice system wasn't built for you. These are the 6 most painful moments in any legal crisis — and how Call Law App solves every single one."
+    },
+    {
+      slug: "quinton-manning-founder",
+      title: "Quinton Manning — Founder & CEO, Call Law App",
+      date: "June 2026",
+      excerpt: "Quinton Manning built what the $2.4 billion legal AI investment wave ignored: a platform designed for the people who need legal help most."
+    },
+    {
+      slug: "legal-ai-betrayal",
+      title: "The $2.4 Billion Betrayal of Everyday Americans",
+      date: "May 2026",
+      excerpt: "Investors are flooding billions into legal AI — every dollar going to enrich big law firms that already charge $1,000 an hour. One app is fighting back."
+    },
+    {
+      slug: "employment-rights-workers",
+      title: "Your Employer Is Not Your Friend: Employment Rights Every Worker Needs to Know",
+      date: "June 2026",
+      excerpt: "The American workplace is governed by dense laws that protect workers on paper — but most workers never take action because they don't know their rights or can't afford to find out."
+    },
+    {
+      slug: "indiana-immigration-enforcement",
+      title: "Why Call Law App Matters — Indiana Has Expanded Local Immigration Enforcement",
+      date: "June 2026",
+      excerpt: "Indiana's new immigration enforcement law raises the stakes for everyday people. Call Law App helps users prepare, document encounters, and connect to legal help fast."
+    },
     {
       slug: "bail-bonds-services",
       title: "CALL LAW APP Bail Bonds services",
@@ -954,7 +996,13 @@ function Home() {
         </div>
       </footer>
 
-      <SignupModal open={signupOpen} onClose={() => setSignupOpen(false)} />
+      <SignupModal
+        open={signupOpen}
+        onClose={() => {
+          setSignupOpen(false)
+          localStorage.setItem('claSignupSeen', '1')
+        }}
+      />
     </div>
   )
 }
